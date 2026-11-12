@@ -1,0 +1,10 @@
+FROM ubi9/ubi:latest AS base
+RUN dnf install -y httpd && dnf clean all
+EXPOSE 80
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+FROM base AS website1
+COPY website1.html /var/www/html/website1.html
+LABEL website="1"
+FROM base AS website2
+COPY website2.html /var/www/html/website2.html
+LABEL website="2"
